@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  memcached1:
+    image: memcached
+    ports:
+      - "11211:11211"
+    networks:
+      - app-network
+  memcached2:
+    image: memcached
+    ports:
+      - "11212:11211"
+    networks:
+      - app-network
+  memcached3:
+    image: memcached
+    ports:
+      - "11213:11211"
+    networks:
+      - app-network
+
+  hazelcast1:
+    image: hazelcast/hazelcast
+    ports:
+      - "5701:5701"
+    networks:
+      - app-network
+  hazelcast2:
+    image: hazelcast/hazelcast
+    ports:
+      - "5702:5701"
+    networks:
+      - app-network
+  hazelcast3:
+    image: hazelcast/hazelcast
+    ports:
+      - "5703:5701"
+    networks:
+      - app-network
+
+  redis1:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+  redis2:
+    image: redis
+    ports:
+      - "6380:6379"
+    networks:
+      - app-network
+  redis3:
+    image: redis
+    ports:
+      - "6381:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
