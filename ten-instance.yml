@@ -1,6 +1,12 @@
 version: "3.8"
 
 services:
+  memcached0:
+    image: memcached
+    ports:
+      - "11210:11211"
+    networks:
+      - app-network
   memcached1:
     image: memcached
     ports:
@@ -19,7 +25,6 @@ services:
       - "11213:11211"
     networks:
       - app-network
-
   memcached4:
     image: memcached
     ports:
@@ -56,13 +61,13 @@ services:
       - "11219:11211"
     networks:
       - app-network
-  memcached10:
-    image: memcached
+
+  hazelcast0:
+    image: hazelcast/hazelcast
     ports:
-      - "11220:11211"
+      - "5700:5701"
     networks:
       - app-network
-
   hazelcast1:
     image: hazelcast/hazelcast
     ports:
@@ -117,71 +122,65 @@ services:
       - "5709:5701"
     networks:
       - app-network
-  hazelcast10:
-    image: hazelcast/hazelcast
+
+  redis0:
+    image: redis
     ports:
-      - "5710:5701"
+      - "6370:6379"
     networks:
       - app-network
-
   redis1:
     image: redis
     ports:
-      - "6379:6379"
+      - "6371:6379"
     networks:
       - app-network
   redis2:
     image: redis
     ports:
-      - "6380:6379"
+      - "6372:6379"
     networks:
       - app-network
   redis3:
     image: redis
     ports:
-      - "6381:6379"
+      - "6373:6379"
     networks:
       - app-network
   redis4:
     image: redis
     ports:
-      - "6382:6379"
+      - "6374:6379"
     networks:
       - app-network
   redis5:
     image: redis
     ports:
-      - "6383:6379"
+      - "6375:6379"
     networks:
       - app-network
   redis6:
     image: redis
     ports:
-      - "6384:6379"
+      - "6376:6379"
     networks:
       - app-network
   redis7:
     image: redis
     ports:
-      - "6385:6379"
+      - "6377:6379"
     networks:
       - app-network
   redis8:
     image: redis
     ports:
-      - "6386:6379"
+      - "6378:6379"
     networks:
       - app-network
   redis9:
     image: redis
     ports:
-      - "6387:6379"
-    networks:
-      - app-network
-  redis10:
-    image: redis
-    ports:
-      - "6388:6379"
+      - "6379:6379"
     networks:
       - app-network
 
