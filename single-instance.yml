@@ -3,6 +3,7 @@ version: "3.8"
 services:
   memcached0:
     image: memcached
+    command: memcached -m 16384
     ports:
       - "11210:11211"
     networks:

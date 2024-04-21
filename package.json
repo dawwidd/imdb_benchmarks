@@ -3,5 +3,17 @@
     "hazelcast-client": "^5.3.0",
     "memcached": "^2.2.2",
     "redis": "^4.6.13"
+  },
+  "scripts": {
+    "benchmark": "node index.js",
+    "single-start": "docker-compose -f single-instance.yml up -d",
+    "single-stop": "docker-compose -f single-instance.yml down",
+    "single-restart": "docker-compose -f single-instance.yml restart",
+    "triple-start": "docker-compose -f triple-instance.yml up -d",
+    "triple-stop": "docker-compose -f triple-instance.yml down",
+    "triple-restart": "docker-compose -f triple-instance.yml restart",
+    "ten-start": "docker-compose -f ten-instance.yml up -d",
+    "ten-stop": "docker-compose -f ten-instance.yml down",
+    "ten-restart": "docker-compose -f ten-instance.yml restart"
   }
 }

@@ -34,6 +34,30 @@ class HazelcastClient {
     await this.client.shutdown();
     console.log("Hazelcast Client Disconnected");
   }
+
+  async benchmarkWrite(dataSize, show = false) {
+    let data = Buffer.alloc(dataSize, 'a').toString(); 
+    const map = await this.client.getMap('benchmark-map');  
+    let totalOperations = 10000;
+    let totalTimeTaken = 0;
+    const operations = [];
+
+    for (let i = 0; i < totalOperations; i++) {
+      const key = `key-${dataSize}-${i}`;
+      
+      operations.push(map.set(key, data));  
+    }
+    const start = process.hrtime.bigint();
+    await Promise.all(operations);
+    const end = process.hrtime.bigint();
+
+    totalTimeTaken += Number(end - start) / 1e6;
+
+    await map.clear();
+
+    const averageTime = totalTimeTaken / totalOperations;
+    if(show) console.info(`Hazelcast Write for size ${dataSize} bytes: ${averageTime.toFixed(6)} ms per operation`);
+  }
 }
 
 class SilentLogger {
