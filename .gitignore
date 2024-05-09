@@ -1,2 +1,4 @@
 node_modules/
-
+venv/
+*result*
+*_pycache_*

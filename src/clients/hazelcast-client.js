@@ -1,13 +1,17 @@
 const { HazelcastClient: HClient } = require("hazelcast-client/lib/HazelcastClient");
+const fs = require('fs');
 
 
 class HazelcastClient {
 
-  constructor(numOfInstances = 1) {
+  constructor(numOfInstances = 1, resultFilename = 'results-hazelcast.txt', totalOperations = 10000) {
     this.config = {
       ...this.generateConfig(numOfInstances),
       customLogger: new SilentLogger()
     }
+    this.numOfInstances = numOfInstances;
+    this.resultFilename = resultFilename;
+    this.totalOperations = totalOperations;
   }
 
   generateConfig(numOfInstances) {
@@ -26,6 +30,7 @@ class HazelcastClient {
 
   async connect() {
     this.client = await HClient.newHazelcastClient(this.config);
+    this.map = await this.client.getMap('benchmark-map');
     console.log("Connected to Hazelcast");
     return this.client;
   }
@@ -35,28 +40,69 @@ class HazelcastClient {
     console.log("Hazelcast Client Disconnected");
   }
 
-  async benchmarkWrite(dataSize, show = false) {
-    let data = Buffer.alloc(dataSize, 'a').toString(); 
-    const map = await this.client.getMap('benchmark-map');  
-    let totalOperations = 10000;
-    let totalTimeTaken = 0;
-    const operations = [];
-
-    for (let i = 0; i < totalOperations; i++) {
-      const key = `key-${dataSize}-${i}`;
-      
-      operations.push(map.set(key, data));  
+  async cleanup() {
+    for (let key of this.keys) {
+      await this.map.delete(key);
     }
-    const start = process.hrtime.bigint();
-    await Promise.all(operations);
-    const end = process.hrtime.bigint();
+  }
 
-    totalTimeTaken += Number(end - start) / 1e6;
+  benchmarkWrite(dataSize, show = false) {
+    return new Promise((resolve) => {
+      let data = Buffer.alloc(dataSize, 'a').toString(); 
+      let totalOperations = 10000;
+      let totalTimeTaken = 0;
+      this.keys = [];
+      const operations = [];
+  
+      for (let i = 0; i < totalOperations; i++) {
+        const key = `key-${dataSize}-${i}`;
+        this.keys.push(key);
+        
+        operations.push(this.map.set(key, data));  
+      }
+      const start = process.hrtime.bigint();
+      Promise.all(operations).then(() => {
+        const end = process.hrtime.bigint();
+    
+        totalTimeTaken += Number(end - start) / 1e6;
 
-    await map.clear();
+        const averageTime = totalTimeTaken / totalOperations;
+        if(show) {
+          console.info(`Hazelcast write for size ${dataSize} bytes: ${averageTime.toFixed(6)} ms per operation`);
+          fs.appendFile(this.resultFilename, 'Hazelcast, WRITE, ' + this.numOfInstances + ', ' + dataSize + ', ' + averageTime.toFixed(6) + '\n', (err) => {
+            if(err) console.error(err);
+          });
+        }
 
-    const averageTime = totalTimeTaken / totalOperations;
-    if(show) console.info(`Hazelcast Write for size ${dataSize} bytes: ${averageTime.toFixed(6)} ms per operation`);
+        resolve();
+      });
+    })
+  }
+
+  benchmarkRead(dataSize, show = false) {
+    return new Promise((resolve) => {
+      const keys = this.keys
+                    .map(val => ({ val, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                    .map(obj => obj.val);
+
+      let operations = keys.map(key => this.map.get(key));
+      
+      const start = process.hrtime.bigint();
+      Promise.all(operations).then(() => {
+        const end = process.hrtime.bigint();
+    
+        const averageTime = (Number(end - start) / 1e6) / this.keys.length;
+        if(show) {
+          console.info(`Hazelcast read for size ${dataSize} bytes: ${averageTime.toFixed(6)} ms per operation`);
+          fs.appendFile(this.resultFilename, 'Hazelcast, READ, ' + this.numOfInstances + ', ' + dataSize + ', ' + averageTime.toFixed(6) + '\n', (err) => {
+            if(err) console.error(err);
+          });
+        }
+  
+        resolve()
+      })
+    })
   }
 }
 
