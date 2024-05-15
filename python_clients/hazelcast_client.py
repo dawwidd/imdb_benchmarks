@@ -30,6 +30,13 @@ class HazelcastClient:
 
     # print("Connected to Hazelcast")
 
+  def connect(self, instanceNumber):
+    self.client = hazelcastClient(
+      cluster_members = [f'127.0.0.1:570{instanceNumber}']
+    )
+
+    self.map = self.client.get_map('benchmark-map')
+
   def disconnect(self):
     self.client.shutdown()
     # print("Disconnected from Hazelcast")

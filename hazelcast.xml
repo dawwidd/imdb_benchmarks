@@ -1,0 +1,8 @@
+<hazelcast>
+    <map name="benchmark-map">
+        <!-- Example configuration for a map with a max size and eviction policy -->
+        <eviction size="512" max-size-policy="USED_HEAP_SIZE" eviction-policy="LRU"/>
+        <backup-count>1</backup-count>
+        <async-backup-count>0</async-backup-count>
+    </map>
+</hazelcast>

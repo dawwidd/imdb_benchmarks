@@ -34,6 +34,8 @@ class MemcachedClient:
     else:
       self.client = memcachedCluster(self.config)
 
+  def connect(self, instanceNumber):
+    self.client = memcachedClient(f'127.0.0.1:1121{instanceNumber}')
 
   def disconnect(self):
     self.client.disconnect_all()

@@ -46,6 +46,9 @@ class RedisClient:
 
     # print("Connected to Redis")
 
+  def connect(self, instanceNumber):
+    self.client = redisClient(host = 'localhost', port = 6370 + instanceNumber)
+
   def disconnect(self):
     self.client.close()
     # print("Disconnected from Redis")
