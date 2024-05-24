@@ -22,8 +22,11 @@ class MemcachedClient:
   def generateConfig(self, numOfInstances):
     config = []
 
-    for i in range(numOfInstances):
-      config.append(f'127.0.0.1:1121{i}')
+    config.append('192.168.1.7:11210')
+    if numOfInstances > 1: config.append('192.168.1.110:11211')
+    if numOfInstances > 2: config.append('192.168.1.9:11212')
+
+    print(config)
     
     return config
 
@@ -33,9 +36,6 @@ class MemcachedClient:
       self.client = memcachedClient(self.config[0])
     else:
       self.client = memcachedCluster(self.config)
-
-  def connect(self, instanceNumber):
-    self.client = memcachedClient(f'127.0.0.1:1121{instanceNumber}')
 
   def disconnect(self):
     self.client.disconnect_all()
@@ -56,12 +56,55 @@ class MemcachedClient:
       totalTimeTaken += end - start
 
     averageTime = totalTimeTaken / self.totalOperations
-    if show:
-      print(f'Memcached WRITE SINGLE {dataSize} {averageTime:.8f}')
       
     resultFile = open(self.resultFilename, 'a')
+    print(f'Memcached WRITE SINGLE {dataSize} {averageTime:.8f}')
     resultFile.write(f'Memcached WRITE SINGLE {dataSize} {averageTime:.8f}\n')
     resultFile.close()
+
+  def benchmarkClusterWrite(self, processNum, totalProcesses):
+    self.connect()
+    totalTimeTaken = 0
+    data = 'a' * (1024 // totalProcesses)
+
+    for i in range(self.totalOperations):
+      key = f'key-{i}-{processNum}'
+      start = time.time()
+      self.client.set(key, data)
+      end = time.time()
+
+      totalTimeTaken += end - start
+
+    averageTime = totalTimeTaken / self.totalOperations
+
+    print(f'Memcached WRITE CLUSTER {averageTime:.8f}')
+    resultFile = open(self.resultFilename, 'a')
+    resultFile.write(f'Memcached WRITE CLUSTER {averageTime:.8f}\n')
+    resultFile.close()
+
+    self.disconnect()
+
+  def benchmarkClusterRead(self, processNum, totalProcesses):
+    self.connect()
+    totalTimeTaken = 0
+
+    for i in range(self.totalOperations):
+      key = f'key-{i}-{processNum}'
+      start = time.time()
+      self.client.get(key)
+      end = time.time()
+
+      totalTimeTaken += end - start
+
+    averageTime = totalTimeTaken / self.totalOperations
+
+    print(f'Memcached READ CLUSTER {averageTime:.8f}')
+    resultFile = open(self.resultFilename, 'a')
+    resultFile.write(f'Memcached READ CLUSTER {averageTime:.8f}\n')
+    resultFile.close()
+
+    self.disconnect()
+
 
   def benchmarkWriteMultiprocess(self, dataSize, show=False):
     data = 'a' * dataSize

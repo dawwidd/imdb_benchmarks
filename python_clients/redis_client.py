@@ -30,24 +30,29 @@ class RedisClient:
     #   # ClusterNode('172.22.0.5', 6379),
     #   # ClusterNode('172.22.0.12', 6379),
     # ]
-    for i in range(numOfInstances):
-      config.append(ClusterNode('localhost', 6370 + i))
+    # for i in range(numOfInstances):
+    #   config.append(ClusterNode('localhost', 6370 + i))
 
-    
+    config.append(ClusterNode('192.168.1.7', 6379))
+    if numOfInstances > 1: config.append(ClusterNode('192.168.1.110', 6379))
+    if numOfInstances > 2: config.append(ClusterNode('192.168.1.9', 6379))
+
+    print(config)
+
     return config
 
 
   def connect(self):
 
     if len(self.config) == 1:
-      self.client = redisClient(host = 'localhost', port = 6370)
+      self.client = redisClient(host = '192.168.1.7', port = 6379)
     else:
       self.client = redisCluster(startup_nodes = self.config)
 
     # print("Connected to Redis")
 
-  def connect(self, instanceNumber):
-    self.client = redisClient(host = 'localhost', port = 6370 + instanceNumber)
+  # def connect(self, instanceNumber):
+  #   self.client = redisClient(host = 'localhost', port = 6370 + instanceNumber)
 
   def disconnect(self):
     self.client.close()
@@ -73,6 +78,43 @@ class RedisClient:
       
     resultFile = open(self.resultFilename, 'a')
     resultFile.write(f'Redis WRITE SINGLE {dataSize} {averageTime:.8f}\n')
+    resultFile.close()
+
+  def benchmarkClusterWrite(self, processNum, totalProcesses):
+    totalTimeTaken = 0
+    data = 'a' * (1024 // totalProcesses)
+
+    for i in range(self.totalOperations):
+      key = f'key-{i}-{processNum}'
+      start = time.time()
+      self.client.set(key, data)
+      end = time.time()
+
+      totalTimeTaken += end - start
+
+    averageTime = totalTimeTaken / self.totalOperations
+
+    print(f'Redis WRITE CLUSTER {averageTime:.8f}')
+    resultFile = open(self.resultFilename, 'a')
+    resultFile.write(f'Redis WRITE CLUSTER {averageTime:.8f}\n')
+    resultFile.close()
+
+  def benchmarkClusterRead(self, processNum, totalProcesses):
+    totalTimeTaken = 0
+
+    for i in range(self.totalOperations):
+      key = f'key-{i}-{processNum}'
+      start = time.time()
+      self.client.get(key)
+      end = time.time()
+
+      totalTimeTaken += end - start
+
+    averageTime = totalTimeTaken / self.totalOperations
+
+    print(f'Redis READ CLUSTER {averageTime:.8f}')
+    resultFile = open(self.resultFilename, 'a')
+    resultFile.write(f'Redis READ CLUSTER {averageTime:.8f}\n')
     resultFile.close()
 
   def benchmarkWriteMultiprocess(self, dataSize, show=False):

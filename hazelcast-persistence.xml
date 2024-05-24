@@ -1,0 +1,8 @@
+<hazelcast>
+    <persistence enabled="true"></persistence>
+    <map name="benchmark-map">
+        <data-persistence enabled="true">
+            <fsync>false</fsync>
+        </data-persistence>
+    </map>
+</hazelcast>

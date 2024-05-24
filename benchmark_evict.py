@@ -15,7 +15,7 @@ def runMemcachedBenchmark(process_num, num_of_runs, result_list, total_operation
         time_samples = []
         for i in range(total_operations):
             start = time.time()
-            memcachedClient.client.set(f'key-{process_num}-{run}-{i}', 'a' * 2048)  
+            memcachedClient.client.set(f'key-{process_num}-{run}-{i}', 'a' * 1024)  
             end = time.time()
 
             time_samples.append(end - start)
@@ -38,7 +38,7 @@ def runHazelcastBenchmark(process_num, num_of_runs, result_list, total_operation
         time_samples = []
         for i in range(total_operations):
             start = time.time()
-            hazelcastClient.map.set(f'key-{process_num}-{run}-{i}', 'a' * 2048)  
+            hazelcastClient.map.set(f'key-{process_num}-{run}-{i}', 'a' * 1024)  
             end = time.time()
 
             time_samples.append(end - start)
@@ -85,6 +85,7 @@ def benchmark_evict():
     total_operations = 1048576
     measure_interval = 100000
 
+    # Memcached
     # manager = Manager()
     # result_list = manager.list()  
     # manager_lock = manager.Lock()  
@@ -92,7 +93,7 @@ def benchmark_evict():
     # processes = []
 
     # for process_num in range(num_processes):
-    #     p = Process(target=run_benchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
+    #     p = Process(target=runMemcachedBenchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
     #     p.start()
     #     processes.append(p)
 
@@ -105,42 +106,15 @@ def benchmark_evict():
     
     # plt.figure(figsize=(12, 6))
     # plt.plot(range(measure_interval, measure_interval * len(result_list) + 1, measure_interval), result_list, marker='o', linestyle='-')
-    # plt.title('Average Write Time Over Operations')
-    # plt.xlabel('Number of Measurements')
-    # plt.ylabel('Average Write Time (seconds)')
+    # plt.title('Liczba operacji na sekundę w zależności od ilości zapisanych danych')
+    # plt.xlabel('Liczba zapisanych KB danych')
+    # plt.ylabel('Operacje na sekundę')
     # plt.grid(True)
-    # plt.savefig('memcached_average_write_times_lru.png')
+    # plt.savefig('final_memcached_evict_lru.png')
     # plt.show()
 
 
-    # manager = Manager()
-    # result_list = manager.list()  
-    # manager_lock = manager.Lock()  
-
-    # processes = []
-
-    # for process_num in range(num_processes):
-    #     p = Process(target=runHazelcastBenchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
-    #     p.start()
-    #     processes.append(p)
-
-    # for p in processes:
-    #     p.join()
-
-    
-    # final_average = sum(result_list) / len(result_list)
-
-    
-    # plt.figure(figsize=(12, 6))
-    # plt.plot(range(measure_interval, measure_interval * len(result_list) + 1, measure_interval), result_list, marker='o', linestyle='-')
-    # plt.title('Average Write Time Over Operations')
-    # plt.xlabel('Number of Measurements')
-    # plt.ylabel('Average Write Time (seconds)')
-    # plt.grid(True)
-    # plt.savefig('hazelcast_average_write_times_lru_test2.png')
-    # plt.show()
-
-
+    # Hazelcast
     manager = Manager()
     result_list = manager.list()  
     manager_lock = manager.Lock()  
@@ -148,7 +122,7 @@ def benchmark_evict():
     processes = []
 
     for process_num in range(num_processes):
-        p = Process(target=runRedisBenchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
+        p = Process(target=runHazelcastBenchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
         p.start()
         processes.append(p)
 
@@ -161,9 +135,38 @@ def benchmark_evict():
     
     plt.figure(figsize=(12, 6))
     plt.plot(range(measure_interval, measure_interval * len(result_list) + 1, measure_interval), result_list, marker='o', linestyle='-')
-    plt.title('Average Write Time Over Operations')
-    plt.xlabel('Number of Measurements')
-    plt.ylabel('Average Write Time (seconds)')
+    plt.title('Liczba operacji na sekundę w zależności od ilości zapisanych danych')
+    plt.xlabel('Liczba zapisanych KB danych')
+    plt.ylabel('Operacje na sekundę')
     plt.grid(True)
-    plt.savefig('redis_average_write_times_evict_noeviction.png')
+    plt.savefig('hazelcast_average_write_times_lru_test5.png')
     plt.show()
+
+
+    # Redis
+    # manager = Manager()
+    # result_list = manager.list()  
+    # manager_lock = manager.Lock()  
+
+    # processes = []
+
+    # for process_num in range(num_processes):
+    #     p = Process(target=runRedisBenchmark, args=(process_num, num_of_runs, result_list, total_operations, measure_interval, manager_lock))
+    #     p.start()
+    #     processes.append(p)
+
+    # for p in processes:
+    #     p.join()
+
+    
+    # final_average = sum(result_list) / len(result_list)
+
+    
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(range(measure_interval, measure_interval * len(result_list) + 1, measure_interval), result_list, marker='o', linestyle='-')
+    # plt.title('Liczba operacji na sekundę w zależności od ilości zapisanych danych')
+    # plt.xlabel('Liczba zapisanych KB danych')
+    # plt.ylabel('Operacje na sekundę')
+    # plt.grid(True)
+    # plt.savefig('redis_average_write_times_evict_noeviction.png')
+    # plt.show()

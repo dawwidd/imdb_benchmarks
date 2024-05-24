@@ -1,0 +1,210 @@
+version: "3.8"
+
+services:
+  hazelcast0:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast0:/data
+    ports:
+      - "5700:5701"
+    networks:
+      - app-network
+
+  hazelcast1:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast1:/data
+    ports:
+      - "5701:5701"
+    networks:
+      - app-network
+
+  hazelcast2:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast2:/data
+    ports:
+      - "5702:5701"
+    networks:
+      - app-network
+
+  hazelcast3:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast3:/data
+    ports:
+      - "5703:5701"
+    networks:
+      - app-network
+
+  hazelcast4:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast4:/data
+    ports:
+      - "5704:5701"
+    networks:
+      - app-network
+
+  hazelcast5:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast5:/data
+    ports:
+      - "5705:5701"
+    networks:
+      - app-network
+
+  hazelcast6:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast6:/data
+    ports:
+      - "5706:5701"
+    networks:
+      - app-network
+
+  hazelcast7:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast7:/data
+    ports:
+      - "5707:5701"
+    networks:
+      - app-network
+
+  hazelcast8:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast8:/data
+    ports:
+      - "5708:5701"
+    networks:
+      - app-network
+
+  hazelcast9:
+    image: hazelcast/hazelcast
+    volumes:
+      - ./hazelcast-persistence.xml:/opt/hazelcast/config_ext/hazelcast.xml
+      - ./data/hazelcast9:/data
+    ports:
+      - "5709:5701"
+    networks:
+      - app-network
+
+  # rdb
+  # redis0:
+  #   image: redis
+  #   command: redis-server --save "60 1000" --dbfilename dump.rdb --appendonly no --port 6379
+  #   ports:
+  #   ports:
+  #     - "6370:6379"
+  #   volumes:
+  #     - ./data/redis0:/data
+  #   networks:
+  #     - app-network
+
+  # append only file lub brak persystencji
+  # redis0:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6370:6379"
+  #   volumes:
+  #     - ./data/redis0:/data
+  #   networks:
+  #     - app-network
+  # redis1:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6371:6379"
+  #   volumes:
+  #     - ./data/redis1:/data
+  #   networks:
+  #     - app-network
+  # redis2:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6372:6379"
+  #   volumes:
+  #     - ./data/redis2:/data
+  #   networks:
+  #     - app-network
+  # redis3:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6373:6379"
+  #   volumes:
+  #     - ./data/redis3:/data
+  #   networks:
+  #     - app-network
+  # redis4:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6374:6379"
+  #   volumes:
+  #     - ./data/redis4:/data
+  #   networks:
+  #     - app-network
+  # redis5:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6375:6379"
+  #   volumes:
+  #     - ./data/redis5:/data
+  #   networks:
+  #     - app-network
+  # redis6:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6376:6379"
+  #   volumes:
+  #     - ./data/redis6:/data
+  #   networks:
+  #     - app-network
+  # redis7:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6377:6379"
+  #   volumes:
+  #     - ./data/redis7:/data
+  #   networks:
+  #     - app-network
+  # redis8:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6378:6379"
+  #   volumes:
+  #     - ./data/redis8:/data
+  #   networks:
+  #     - app-network
+  # redis9:
+  #   image: redis
+  #   command: redis-server --appendonly yes --appendfsync always --port 6379
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - ./data/redis9:/data
+  #   networks:
+  #     - app-network
+
+networks:
+  app-network:
+    driver: bridge

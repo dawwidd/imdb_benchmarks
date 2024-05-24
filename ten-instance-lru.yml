@@ -1,217 +1,217 @@
 version: "3.8"
 
 services:
-  # memcached0:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11210:11211"
-  #   networks:
-  #     - app-network
-  # memcached1:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11211:11211"
-  #   networks:
-  #     - app-network
-  # memcached2:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11212:11211"
-  #   networks:
-  #     - app-network
-  # memcached3:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11213:11211"
-  #   networks:
-  #     - app-network
-  # memcached4:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11214:11211"
-  #   networks:
-  #     - app-network
-  # memcached5:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11215:11211"
-  #   networks:
-  #     - app-network
-  # memcached6:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11216:11211"
-  #   networks:
-  #     - app-network
-  # memcached7:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11217:11211"
-  #   networks:
-  #     - app-network
-  # memcached8:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11218:11211"
-  #   networks:
-  #     - app-network
-  # memcached9:
-  #   image: memcached
-  #   command: ["-m", "512m"]
-  #   ports:
-  #     - "11219:11211"
-  #   networks:
-  #     - app-network
+  memcached0:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11210:11211"
+    networks:
+      - app-network
+  memcached1:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11211:11211"
+    networks:
+      - app-network
+  memcached2:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11212:11211"
+    networks:
+      - app-network
+  memcached3:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11213:11211"
+    networks:
+      - app-network
+  memcached4:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11214:11211"
+    networks:
+      - app-network
+  memcached5:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11215:11211"
+    networks:
+      - app-network
+  memcached6:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11216:11211"
+    networks:
+      - app-network
+  memcached7:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11217:11211"
+    networks:
+      - app-network
+  memcached8:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11218:11211"
+    networks:
+      - app-network
+  memcached9:
+    image: memcached
+    command: ["-m", "512m"]
+    ports:
+      - "11219:11211"
+    networks:
+      - app-network
 
-  # hazelcast0:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5700:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast1:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5701:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast2:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5702:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast3:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5703:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast4:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5704:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast5:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5705:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast6:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5706:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast7:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5707:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast8:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5708:5701"
-  #   networks:
-  #     - app-network
-  # hazelcast9:
-  #   image: hazelcast/hazelcast
-  #   deploy:
-  #     resources:
-  #       limits:
-  #         memory: 512M
-  #   # environment:
-  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
-  #   # volumes:
-  #   #   - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
-  #   ports:
-  #     - "5709:5701"
-  #   networks:
-  #     - app-network
+  hazelcast0:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5700:5701"
+    networks:
+      - app-network
+  hazelcast1:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5701:5701"
+    networks:
+      - app-network
+  hazelcast2:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5702:5701"
+    networks:
+      - app-network
+  hazelcast3:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5703:5701"
+    networks:
+      - app-network
+  hazelcast4:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5704:5701"
+    networks:
+      - app-network
+  hazelcast5:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5705:5701"
+    networks:
+      - app-network
+  hazelcast6:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5706:5701"
+    networks:
+      - app-network
+  hazelcast7:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5707:5701"
+    networks:
+      - app-network
+  hazelcast8:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5708:5701"
+    networks:
+      - app-network
+  hazelcast9:
+    image: hazelcast/hazelcast
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx512m
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+    ports:
+      - "5709:5701"
+    networks:
+      - app-network
 
   redis0:
     image: redis

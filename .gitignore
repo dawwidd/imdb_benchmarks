@@ -2,3 +2,5 @@ node_modules/
 venv/
 *result*
 *_pycache_*
+*times*
+data/

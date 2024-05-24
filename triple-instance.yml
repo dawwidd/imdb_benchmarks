@@ -41,21 +41,21 @@ services:
 
   redis0:
     image: redis
-    command: redis-server --appendonly yes --maxmemory 4096mb --maxmemory-policy allkeys-lru --cluster-enabled yes --cluster-config-file /data/nodes.conf --cluster-node-timeout 5000 --port 6379
+    command: redis-server --cluster-enabled yes --port 6379
     ports:
       - "6370:6379"
     networks:
       - app-network
   redis1:
     image: redis
-    command: redis-server --appendonly yes --maxmemory 4096mb --maxmemory-policy allkeys-lru --cluster-enabled yes --cluster-config-file /data/nodes.conf --cluster-node-timeout 5000 --port 6379
+    command: redis-server --cluster-enabled yes --port 6379
     ports:
       - "6371:6379"
     networks:
       - app-network
   redis2:
     image: redis
-    command: redis-server --appendonly yes --maxmemory 4096mb --maxmemory-policy allkeys-lru --cluster-enabled yes --cluster-config-file /data/nodes.conf --cluster-node-timeout 5000 --port 6379
+    command: redis-server --cluster-enabled yes --port 6379
     ports:
       - "6372:6379"
     networks:

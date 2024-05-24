@@ -1,24 +1,32 @@
 version: "3.8"
 
 services:
-  memcached0:
-    image: memcached
-    command: ["-m", "128m"]
-    ports:
-      - "11210:11211"
-    networks:
-      - app-network
+  # memcached0:
+  #   image: memcached
+  #   command: ["-m", "512m"]
+  #   ports:
+  #     - "11210:11211"
+  #   networks:
+  #     - app-network
 
-  hazelcast0:
-    image: hazelcast/hazelcast
-    ports:
-      - "5700:5701"
-    networks:
-      - app-network
+  # hazelcast0:
+  #   image: hazelcast/hazelcast
+  #   # deploy:
+  #   #   resources:
+  #   #     limits:
+  #   #       memory: 512M
+  #   # environment:
+  #   #   - JAVA_OPTS=-Xms512m -Xmx512m
+  #   volumes:
+  #     - ./hazelcast.xml:/opt/hazelcast/config_ext/hazelcast.xml
+  #   ports:
+  #     - "5700:5701"
+  #   networks:
+  #     - app-network
 
   redis0:
     image: redis
-    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "8192"]
+    command: redis-server --appendonly no --maxmemory 512mb --maxmemory-policy allkeys-random --port 6379
     ports:
       - "6370:6379"
     networks:

@@ -17,8 +17,10 @@ services:
 
   redis0:
     image: redis
+    command: redis-server --cluster-enabled yes --cluster-config-file /data/nodes.conf --appendonly no --port 6379
     ports:
-      - "6370:6379"
+      - "6379:6379"
+      - "16379:16379"
     networks:
       - app-network
 
